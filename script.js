@@ -180,6 +180,7 @@ function handleImageLoad(img) {
 }
 
 function handleImageError(img) {
+    console.error('Image failed to load:', img.src);
     img.style.display = 'none';
     const placeholder = img.previousElementSibling;
     if (placeholder && placeholder.classList.contains('image-placeholder')) {
@@ -199,7 +200,7 @@ class TypingAnimation {
         if (!this.typingContainer) return;
         
         this.phrases = [
-            "Full-Stack & Mobile Developer",
+            "Full-Stack & Mobile App Developer",
             "Computer Science Student",
             "UI/UX Enthusiast",
             "Problem Solver",
@@ -871,23 +872,36 @@ class Portfolio {
     initContactForm() {
         const form = document.getElementById('contactForm');
         const submitBtn = document.getElementById('submitBtn');
+        const successAlert = document.querySelector('.alert-success');
+        const errorAlert = document.querySelector('.alert-danger');
         
         if (!form || !submitBtn) return;
         
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            // Validate form
+            if (!this.validateForm(form)) {
+                this.showFormMessage('Please fill in all required fields correctly.', 'error');
+                return;
+            }
+            
             // Disable submit button
             const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Sending...';
             submitBtn.disabled = true;
             
+            // Hide any existing alerts
+            this.hideFormMessages();
+            
             try {
+                // Prepare form data
                 const formData = new FormData(form);
                 
-                // Add honeypot field
-                formData.append('_gotcha', '');
+                // Log form data for debugging
+                console.log('Form submission data:', Object.fromEntries(formData));
                 
+                // Send to Formspree
                 const response = await fetch(form.action, {
                     method: 'POST',
                     body: formData,
@@ -896,15 +910,39 @@ class Portfolio {
                     }
                 });
                 
+                console.log('Formspree response status:', response.status);
+                
                 if (response.ok) {
+                    // Success
+                    this.showFormMessage('✅ Message sent successfully! I\'ll get back to you soon.', 'success');
                     this.notifications.show('✅ Message sent successfully!', 'success', 5000);
+                    
+                    // Reset form
                     form.reset();
+                    
+                    // Log success
+                    console.log('Message sent successfully!');
                 } else {
-                    throw new Error('Form submission failed');
+                    // Handle Formspree errors
+                    let errorMessage = 'Error sending message. Please try again.';
+                    try {
+                        const errorData = await response.json();
+                        if (errorData.error) {
+                            errorMessage = errorData.error;
+                        }
+                    } catch (parseError) {
+                        console.error('Error parsing response:', parseError);
+                    }
+                    
+                    this.showFormMessage(`❌ ${errorMessage}`, 'error');
+                    this.notifications.show(`❌ ${errorMessage}`, 'error', 5000);
+                    console.error('Form submission failed:', errorMessage);
                 }
             } catch (error) {
-                console.error('Form error:', error);
-                this.notifications.show('❌ Error sending message. Please try again.', 'error', 5000);
+                // Network or other errors
+                console.error('Network error:', error);
+                this.showFormMessage('❌ Network error. Please check your connection and try again.', 'error');
+                this.notifications.show('❌ Network error. Please check your connection.', 'error', 5000);
             } finally {
                 // Re-enable submit button
                 submitBtn.innerHTML = originalText;
@@ -912,21 +950,119 @@ class Portfolio {
             }
         });
         
-        // Form validation styling
+        // Real-time form validation
         form.querySelectorAll('.form-control').forEach(field => {
-            field.addEventListener('input', function() {
-                if (this.checkValidity()) {
-                    this.style.borderColor = 'var(--terminal-green)';
-                } else {
-                    this.style.borderColor = 'var(--terminal-border)';
-                }
+            field.addEventListener('input', () => {
+                this.validateField(field);
             });
             
-            field.addEventListener('invalid', function(e) {
-                e.preventDefault();
-                this.style.borderColor = 'var(--terminal-pink)';
-                this.notifications.show('Please fill in all required fields correctly.', 'error', 3000);
+            field.addEventListener('blur', () => {
+                this.validateField(field);
             });
+        });
+    }
+    
+    validateForm(form) {
+        let isValid = true;
+        
+        form.querySelectorAll('[required]').forEach(field => {
+            if (!field.value.trim()) {
+                this.markFieldInvalid(field);
+                isValid = false;
+            } else {
+                this.markFieldValid(field);
+                
+                // Email validation
+                if (field.type === 'email') {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(field.value.trim())) {
+                        this.markFieldInvalid(field, 'Please enter a valid email address');
+                        isValid = false;
+                    }
+                }
+            }
+        });
+        
+        return isValid;
+    }
+    
+    validateField(field) {
+        if (field.hasAttribute('required') && !field.value.trim()) {
+            this.markFieldInvalid(field, 'This field is required');
+            return false;
+        }
+        
+        if (field.type === 'email' && field.value.trim()) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(field.value.trim())) {
+                this.markFieldInvalid(field, 'Please enter a valid email address');
+                return false;
+            }
+        }
+        
+        this.markFieldValid(field);
+        return true;
+    }
+    
+    markFieldValid(field) {
+        field.style.borderColor = 'var(--terminal-green)';
+        field.style.boxShadow = '0 0 0 2px rgba(0, 255, 157, 0.1)';
+        
+        // Remove any existing error message
+        const errorSpan = field.nextElementSibling;
+        if (errorSpan && errorSpan.classList.contains('field-error')) {
+            errorSpan.remove();
+        }
+    }
+    
+    markFieldInvalid(field, message = 'This field is required') {
+        field.style.borderColor = 'var(--terminal-pink)';
+        field.style.boxShadow = '0 0 0 2px rgba(255, 107, 139, 0.1)';
+        
+        // Remove any existing error message
+        const existingError = field.nextElementSibling;
+        if (existingError && existingError.classList.contains('field-error')) {
+            existingError.remove();
+        }
+        
+        // Add error message
+        const errorSpan = document.createElement('span');
+        errorSpan.className = 'field-error';
+        errorSpan.style.cssText = `
+            display: block;
+            color: var(--terminal-pink);
+            font-size: 0.85rem;
+            margin-top: 5px;
+            font-family: 'Fira Code', monospace;
+        `;
+        errorSpan.textContent = message;
+        
+        field.parentNode.insertBefore(errorSpan, field.nextSibling);
+    }
+    
+    showFormMessage(message, type = 'info') {
+        const successAlert = document.querySelector('.alert-success');
+        const errorAlert = document.querySelector('.alert-danger');
+        
+        this.hideFormMessages();
+        
+        if (type === 'success' && successAlert) {
+            successAlert.querySelector('#success-message').textContent = message;
+            successAlert.style.display = 'block';
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                successAlert.style.display = 'none';
+            }, 5000);
+        } else if (type === 'error' && errorAlert) {
+            errorAlert.querySelector('#error-message').textContent = message;
+            errorAlert.style.display = 'block';
+        }
+    }
+    
+    hideFormMessages() {
+        document.querySelectorAll('.alert').forEach(alert => {
+            alert.style.display = 'none';
         });
     }
     
@@ -971,16 +1107,19 @@ class Portfolio {
         });
         
         // Add CSS for ripple animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes ripple {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
+        if (!document.querySelector('#ripple-animation-style')) {
+            const style = document.createElement('style');
+            style.id = 'ripple-animation-style';
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
                 }
-            }
-        `;
-        document.head.appendChild(style);
+            `;
+            document.head.appendChild(style);
+        }
         
         // Animate elements on hover
         document.querySelectorAll('.highlight-card, .skill-category, .project-card').forEach(card => {
@@ -1035,6 +1174,29 @@ class Portfolio {
         
         // Initialize Intersection Observer for scroll animations
         this.initIntersectionObserver();
+        
+        // Test Formspree connection on load
+        setTimeout(() => {
+            this.testFormspreeConnection();
+        }, 3000);
+    }
+    
+    async testFormspreeConnection() {
+        try {
+            const response = await fetch('https://formspree.io/f/mdaedbow', {
+                method: 'HEAD',
+                mode: 'no-cors'
+            }).catch(() => null);
+            
+            if (response === null) {
+                console.warn('⚠️ Formspree endpoint may not be accessible (CORS issue)');
+                console.info('💡 This is normal if testing locally. Formspree works on live sites.');
+            } else {
+                console.log('✅ Formspree endpoint is accessible');
+            }
+        } catch (error) {
+            console.warn('⚠️ Could not test Formspree connection:', error.message);
+        }
     }
     
     initIntersectionObserver() {
