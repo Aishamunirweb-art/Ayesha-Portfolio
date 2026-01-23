@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+Allow: /sitemap.xml
+Allow: /images/
+Disallow: /admin/
+Disallow: /private/
+
+Sitemap: https://ayeshamuneer.com/sitemap.xml
+
+# Google Image Crawler
+User-agent: Googlebot-Image
+Allow: /
+
+# Bing Crawler
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
