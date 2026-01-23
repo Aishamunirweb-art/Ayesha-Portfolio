@@ -1,0 +1,150 @@
+/* TEAM */
+
+/* THANKS FOR CHECKING OUT MY PORTFOLIO */
+/* This file tells people about the humans behind this website */
+
+/* TITLE */
+Ayesha Muneer - Developer Portfolio
+
+/* TEAM */
+  Developer: Ayesha Muneer
+  Role: Full-Stack & Mobile App Developer
+  Site: https://ayeshamuneer.com
+  Email: aisha.munir.web@gmail.com
+  Phone: +92 314 4757051
+  Location: Vehari, Punjab, Pakistan
+  GitHub: https://github.com/Aishamunirweb-art
+  LinkedIn: https://www.linkedin.com/in/ayesha-jutt-405b97396/
+  Twitter: https://x.com/ayesha_munir_
+  
+  Student: COMSATS University Islamabad, Vehari Campus
+  Program: BS Computer Science
+  Year: 2022-2026 (Expected)
+
+/* SITE */
+  Last update: 2024-01-15
+  Language: English
+  Doctype: HTML5
+  Standards: HTML5, CSS3, JavaScript ES6+
+  Components: Responsive Design, Bootstrap 5.3, Formspree Integration
+  Software: Visual Studio Code, GitHub, Figma, Android Studio
+  
+  Made with: ❤️, 💻, and 🎨
+  IDE: Visual Studio Code
+  Version Control: Git & GitHub
+  Design Tools: Figma, Adobe XD
+  Browser Support: Chrome, Firefox, Safari, Edge (latest versions)
+
+/* THANKS */
+  Thanks to:
+  - Bootstrap Team for the amazing framework
+  - Google Fonts for beautiful typography
+  - Formspree for form handling
+  - Bootstrap Icons for iconography
+  - Unsplash for placeholder images
+  
+  Inspiration from:
+  - Terminal/command line interfaces
+  - Modern developer portfolios
+  - Cyberpunk aesthetics
+
+/* NOTE */
+  This portfolio is hand-coded with attention to detail.
+  Every line of code is written by Ayesha Muneer.
+  No website builders or templates were used.
+  
+  "Good code is its own best documentation." - Steve McConnell
+
+/* COLOPHON */
+  Typography:
+  - Headings: JetBrains Mono
+  - Body: Inter
+  - Code: Fira Code
+  
+  Color Palette:
+  - Terminal Green: #00ff9d
+  - Terminal Blue: #00d9ff
+  - Terminal Purple: #b967ff
+  - Terminal Pink: #ff6bcb
+  - Terminal Yellow: #ffcc00
+  - Background: #0a0e17
+  - Text: #e2e8ff
+  
+  Technologies:
+  - Frontend: HTML5, CSS3, JavaScript, Bootstrap 5.3
+  - Backend: PHP, Laravel, MySQL
+  - Mobile: Flutter, Dart, Android Studio
+  - Tools: Git, GitHub, VS Code, Figma
+
+/* PROJECTS FEATURED */
+  1. Form Builder App - Flutter Mobile Application
+  2. Weather Pro - Mobile Weather App
+  3. Laravel CRUD Management System
+  4. University Student Portal
+  5. Personal Portfolio Website
+  6. Tim Hortons Webpage Clone
+
+/* SKILLS */
+  Frontend Development:
+  - HTML5, CSS3, JavaScript (ES6+)
+  - Bootstrap 5, Responsive Design
+  - UI/UX Design Principles
+  
+  Backend Development:
+  - PHP, Laravel
+  - MySQL Database Management
+  - REST API Development
+  
+  Mobile Development:
+  - Flutter & Dart
+  - Firebase Integration
+  - Android Studio
+  
+  Tools & Others:
+  - Git & GitHub
+  - Figma & Adobe XD
+  - VS Code, Android Studio
+  - Formspree, Netlify
+
+/* TIMELINE */
+  2024 - Current Portfolio Redesign
+  2023 - Started BS Computer Science
+  2023 - First Flutter Mobile App
+  2023 - Web Development Projects
+  2022 - Started Programming Journey
+
+/* PHILOSOPHY */
+  "Code is like humor. When you have to explain it, it's bad." - Cory House
+  
+  Development Principles:
+  1. Write clean, maintainable code
+  2. Prioritize user experience
+  3. Keep learning and improving
+  4. Solve real-world problems
+  5. Document everything
+
+/* ACKNOWLEDGMENTS */
+  Special thanks to:
+  - My professors at COMSATS University
+  - Online communities (Stack Overflow, GitHub)
+  - Developer documentation maintainers
+  - Open source contributors
+  - All who visit and provide feedback
+
+/* COPYRIGHT */
+  Copyright © 2024 Ayesha Muneer
+  All rights reserved.
+  
+  This portfolio and its source code are proprietary.
+  You may view the source for learning purposes.
+  Do not copy or redistribute without permission.
+  
+  Licensed under personal use only.
+
+/* LAST WORDS */
+  "The most effective way to do it, is to do it." - Amelia Earhart
+  
+  Always building, always learning.
+  Thanks for stopping by!
+  
+  Connect with me for collaborations, projects, or just to say hi!
