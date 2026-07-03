@@ -1,25 +1,22 @@
-# Ayesha Portfolio Website
+Ayesha Portfolio Website
 
-## About
+About
 A responsive personal portfolio website showcasing my projects, skills, education, and experience.
 
-## Features
+Features
 - Responsive Design
 - Modern UI
 - Contact Form
 - Project Showcase
 - Resume Download
 
-## Technologies Used
+Technologies Used
 - HTML5
 - CSS3
 - JavaScript
 
-## Live Demo
-https://your-website-link
+Live Demo
+https://ayeshamuneer-portfolio.vercel.app/
 
-## Screenshots
-(Add screenshots)
-
-## Author
+Author
 Ayesha Muneer
